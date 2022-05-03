@@ -1,6 +1,6 @@
 <?php
 
-$url = '/php-headless-wp/wordpress';
+$url = 'https://php-headless-wp.herokuapp.com/php-headless-wp/';
 
 header("Location: ".$url);
 exit();
