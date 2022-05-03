@@ -8383,3 +8383,71 @@ function is_php_version_compatible( $required ) {
 function wp_fuzzy_number_match( $expected, $actual, $precision = 1 ) {
 	return abs( (float) $expected - (float) $actual ) <= $precision;
 }
+
+function get_menu() {
+    # Change 'menu' to your own navigation slug.
+    return wp_get_nav_menu_items('menu');
+}
+
+add_action( 'rest_api_init', function () {
+        register_rest_route( 'myroutes', '/menu', array(
+        'methods' => 'GET',
+        'callback' => 'get_menu',
+    ) );
+} );
+
+// Our custom post type function
+function create_posttype() {
+    register_post_type( 'podcast',
+    // CPT Options
+        array(
+            'labels' => array(
+                'name' => __( 'Podcast' ),
+                'singular_name' => __( 'Podcast' )
+            ),
+            'has_archive' => true,
+            'rewrite' => array('slug' => 'podcast'),
+            'show_in_rest' => true,
+            'supports' => array( 
+                'title', 
+                'editor', 
+                'excerpt', 
+                'author', 
+                'thumbnail', 
+                'featured_image', 
+                'comments', 
+                'revisions', 
+                'custom-fields', 
+                'post-thumbnails', 
+                'tag',
+                'tags'
+                ),
+            'taxonomies'          => array( 
+                'category' , 
+                'all_items',
+                'post_tag'                
+            ),
+            /* A hierarchical CPT is like Pages and can have
+            * Parent and child items. A non-hierarchical CPT
+            * is like Posts.
+            */
+            'hierarchical'        => false,
+            'public'              => true,
+            'show_ui'             => true,
+            'show_in_menu'        => true,
+            'show_in_nav_menus'   => true,
+            'show_in_admin_bar'   => true,
+            'menu_position'       => null,            
+            'can_export'          => true,
+            'has_archive'         => true,
+            'exclude_from_search' => false,
+            'publicly_queryable'  => true,
+            'capability_type'     => 'post',
+            'show_in_rest'       => true,
+            'rest_base'          => 'podcasts',
+            'rest_controller_class' => 'WP_REST_Posts_Controller',
+        )
+    );
+}
+// Hooking up our function to theme setup
+add_action( 'init', 'create_posttype' );
