@@ -10,3 +10,5 @@ Home page url = http://localhost:8090/php-headless-wp/wordpress/
 Import database file to your local DB client
 
 file: wordpress.sql
+
+Deployed online at: https://php-training-accedo.000webhostapp.com
