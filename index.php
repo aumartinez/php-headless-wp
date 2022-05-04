@@ -1,6 +1,6 @@
 <?php
 
-$url = 'https://php-headless-wp.herokuapp.com/php-headless-wp/';
+$url = 'https://php-training-accedo.000webhostapp.com/';
 
 header("Location: ".$url);
 exit();
